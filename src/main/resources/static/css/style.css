@@ -11,3 +11,16 @@
 	margin-left: 20px;
 	margin-right: 20px;
 }
+
+.link-panel{
+	float: right;
+	color: black;
+	padding: 0px;
+	
+	
+}
+
+.titulo-panel{
+	float: left;
+	padding-top: 2px;
+}
