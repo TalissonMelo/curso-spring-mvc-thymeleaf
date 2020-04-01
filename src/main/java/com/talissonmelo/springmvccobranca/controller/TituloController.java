@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.talissonmelo.springmvccobranca.model.Titulo;
 import com.talissonmelo.springmvccobranca.model.enums.StatusTitulo;
@@ -31,18 +32,16 @@ public class TituloController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView salvar(@Validated Titulo titulo, Errors errors) {
-
-		ModelAndView mv = new ModelAndView("CadastroTitulo");
+	public String salvar(@Validated Titulo titulo, Errors errors, RedirectAttributes attributes) {
 
 		if (errors.hasErrors()) {
-			return mv;
+			return "CadastroTitulo";
 		}
 
 		repository.save(titulo);
 
-		mv.addObject("mensagem", "Título : " + titulo.getDescricao() + ", cadastrado com sucesso!.");
-		return mv;
+		attributes.addFlashAttribute("mensagem", "Título : " + titulo.getDescricao() + ", cadastrado com sucesso!.");
+		return "redirect:/titulos/cadastro";
 	}
 
 	@RequestMapping
