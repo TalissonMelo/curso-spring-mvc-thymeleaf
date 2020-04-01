@@ -11,7 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -24,12 +28,17 @@ public class Titulo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotEmpty(message = "Descrição é Obrigatória.")
+	@Length(max = 60, message = "Descrição não pode conter mais de 60 caracteres.")
 	private String descricao;
 
+	@NotNull(message = "Data de Vencimento e Obrigatória")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date dataVencimento;
 	
+	@NotNull(message = "Valor  é Obrigatória.")
+	@DecimalMin(value = "0.01", message = "Valor não pode ser menor que 0,01")
 	@NumberFormat(pattern = "#,##0.00")
 	private BigDecimal valor;
 
